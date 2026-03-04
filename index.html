@@ -4,85 +4,134 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Фазы Луны сегодня — fazyluny.ru</title>
-  <meta name="description" content="Текущая фаза Луны, процент освещённости, время восхода и захода. Лунный календарь онлайн по городам России.">
+  <meta name="description" content="Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн.">
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #0d1117; color: #c9d1d9; }
-    h1 { color: #58a6ff; }
-    #result { font-size: 1.4em; margin: 20px; padding: 20px; background: #161b22; border-radius: 10px; }
-    button { padding: 12px 24px; font-size: 1.1em; background: #238636; color: white; border: none; border-radius: 6px; cursor: pointer; }
-    button:hover { background: #2ea043; }
-    input, select { padding: 10px; margin: 10px; font-size: 1em; width: 220px; }
-    .emoji { font-size: 5em; margin: 15px 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+    }
+    h1 {
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+    #result {
+      font-size: 1.3em;
+      margin: 25px auto;
+      padding: 25px;
+      background: #161b22;
+      border-radius: 12px;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    button {
+      padding: 12px 28px;
+      font-size: 1.1em;
+      background: #238636;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 15px 0;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    input, select {
+      padding: 10px;
+      margin: 8px;
+      font-size: 1em;
+      width: 240px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    .emoji {
+      font-size: 6em;
+      margin: 15px 0;
+    }
+    .label {
+      font-size: 1.1em;
+      margin: 10px 0 5px;
+    }
   </style>
 </head>
 <body>
   <h1>Фазы Луны сегодня</h1>
-  
-  <p>Выберите дату:</p>
+
+  <div class="label">Выберите дату:</div>
   <input type="date" id="dateInput">
-  
-  <p>Город:</p>
+
+  <div class="label">Город:</div>
   <select id="city">
-    <option value="Москва">Москва (55.7558, 37.6173)</option>
-    <option value="Санкт-Петербург">Санкт-Петербург (59.9343, 30.3351)</option>
-    <option value="Новосибирск">Новосибирск (55.0084, 82.9357)</option>
-    <option value="Екатеринбург">Екатеринбург (56.8389, 60.6057)</option>
-    <option value="Казань">Казань (55.8304, 49.0661)</option>
-    <option value="Нижний Новгород">Нижний Новгород (56.2965, 43.9361)</option>
-    <option value="Челябинск">Челябинск (55.1644, 61.4368)</option>
-    <option value="Самара">Самара (53.1959, 50.1002)</option>
-    <option value="Омск">Омск (54.9884, 73.3242)</option>
-    <option value="Ростов-на-Дону">Ростов-на-Дону (47.2225, 39.7203)</option>
-    <option value="Уфа">Уфа (54.7388, 55.9726)</option>
-    <!-- Можно добавить ещё: Красноярск, Воронеж, Пермь и т.д. -->
+    <option value="Москва">Москва</option>
+    <option value="Санкт-Петербург">Санкт-Петербург</option>
+    <option value="Новосибирск">Новосибирск</option>
+    <option value="Екатеринбург">Екатеринбург</option>
+    <option value="Казань">Казань</option>
+    <option value="Нижний Новгород">Нижний Новгород</option>
+    <option value="Челябинск">Челябинск</option>
+    <option value="Самара">Самара</option>
+    <option value="Омск">Омск</option>
+    <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+    <option value="Уфа">Уфа</option>
+    <!-- Добавляй новые города сюда по желанию -->
   </select>
-  
+
   <br>
   <button onclick="showMoonPhase()">Показать фазу Луны</button>
-  
+
   <div id="result"></div>
 
   <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
   <script>
-    // Координаты городов (lat, lon)
+    // Координаты городов (lat, lon) — скрыты от пользователя
     const cities = {
-      "Москва": { lat: 55.7558, lon: 37.6173 },
+      "Москва":          { lat: 55.7558, lon: 37.6173 },
       "Санкт-Петербург": { lat: 59.9343, lon: 30.3351 },
-      "Новосибирск": { lat: 55.0084, lon: 82.9357 },
-      "Екатеринбург": { lat: 56.8389, lon: 60.6057 },
-      "Казань": { lat: 55.8304, lon: 49.0661 },
+      "Новосибирск":     { lat: 55.0084, lon: 82.9357 },
+      "Екатеринбург":    { lat: 56.8389, lon: 60.6057 },
+      "Казань":          { lat: 55.8304, lon: 49.0661 },
       "Нижний Новгород": { lat: 56.2965, lon: 43.9361 },
-      "Челябинск": { lat: 55.1644, lon: 61.4368 },
-      "Самара": { lat: 53.1959, lon: 50.1002 },
-      "Омск": { lat: 54.9884, lon: 73.3242 },
-      "Ростов-на-Дону": { lat: 47.2225, lon: 39.7203 },
-      "Уфа": { lat: 54.7388, lon: 55.9726 }
+      "Челябинск":       { lat: 55.1644, lon: 61.4368 },
+      "Самара":          { lat: 53.1959, lon: 50.1002 },
+      "Омск":            { lat: 54.9884, lon: 73.3242 },
+      "Ростов-на-Дону":  { lat: 47.2225, lon: 39.7203 },
+      "Уфа":             { lat: 54.7388, lon: 55.9726 }
     };
 
     function showMoonPhase() {
       const dateStr = document.getElementById('dateInput').value;
       const date = dateStr ? new Date(dateStr) : new Date();
-      
+
       const selectedCity = document.getElementById('city').value;
-      const coords = cities[selectedCity] || cities["Москва"]; // fallback на Москву
-      
+      const coords = cities[selectedCity] || cities["Москва"]; // fallback
+
       const moonIllum = SunCalc.getMoonIllumination(date);
       const moonTimes = SunCalc.getMoonTimes(date, coords.lat, coords.lon);
-      
+
       let phaseName = '';
-      if (moonIllum.fraction < 0.03) phaseName = 'Новолуние 🌑';
-      else if (moonIllum.fraction < 0.47) phaseName = 'Растущая Луна 🌒🌓';
-      else if (moonIllum.fraction < 0.53) phaseName = 'Полнолуние 🌕';
-      else phaseName = 'Убывающая Луна 🌔🌗';
-      
+      if (moonIllum.fraction < 0.03) phaseName = 'Новолуние';
+      else if (moonIllum.fraction < 0.47) phaseName = 'Растущая Луна';
+      else if (moonIllum.fraction < 0.53) phaseName = 'Полнолуние';
+      else phaseName = 'Убывающая Луна';
+
       const percent = Math.round(moonIllum.fraction * 100);
-      
+
       let moonRiseSet = '';
-      if (moonTimes.rise) moonRiseSet += `<strong>Восход Луны:</strong> ${moonTimes.rise.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
-      if (moonTimes.set) moonRiseSet += `<strong>Заход Луны:</strong> ${moonTimes.set.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
-      if (moonTimes.alwaysUp) moonRiseSet = '<strong>Луна всегда над горизонтом (полярный день)</strong><br>';
-      if (moonTimes.alwaysDown) moonRiseSet = '<strong>Луна всегда под горизонтом</strong><br>';
-      
+      if (moonTimes.rise) {
+        moonRiseSet += `<strong>Восход Луны:</strong> ${moonTimes.rise.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
+      }
+      if (moonTimes.set) {
+        moonRiseSet += `<strong>Заход Луны:</strong> ${moonTimes.set.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
+      }
+      if (moonTimes.alwaysUp) moonRiseSet = '<strong>Луна не заходит (полярный день)</strong><br>';
+      if (moonTimes.alwaysDown) moonRiseSet = '<strong>Луна не восходит (полярная ночь)</strong><br>';
+
       document.getElementById('result').innerHTML = `
         <strong>Город:</strong> ${selectedCity}<br>
         <strong>Дата:</strong> ${date.toLocaleDateString('ru-RU')}<br>
@@ -90,28 +139,34 @@
         <strong>Освещённость:</strong> ${percent}%<br>
         <div class="emoji">${getMoonEmoji(percent)}</div>
         ${moonRiseSet}
-        <p>Рекомендация: ${getRecommendation(moonIllum.fraction)}</p>
+        <p><strong>Рекомендация:</strong> ${getRecommendation(moonIllum.fraction)}</p>
       `;
     }
-    
+
     function getMoonEmoji(percent) {
-      if (percent <= 1) return '🌑';
-      if (percent <= 25) return '🌒';
-      if (percent <= 49) return '🌓';
-      if (percent <= 51) return '🌔';
-      if (percent <= 75) return '🌕';
-      if (percent <= 99) return '🌖';
+      if (percent <= 1)   return '🌑';
+      if (percent <= 25)  return '🌒';
+      if (percent <= 49)  return '🌓';
+      if (percent <= 51)  return '🌔';
+      if (percent <= 75)  return '🌕';
+      if (percent <= 99)  return '🌖';
       return '🌗';
     }
-    
+
     function getRecommendation(fraction) {
-      if (fraction < 0.03 || fraction > 0.97) return 'Новолуние — время отдыха, планирования и новых начинаний.';
-      if (fraction < 0.5) return 'Растущая Луна — благоприятное время для посадки растений, которые растут вверх (помидоры, огурцы, цветы), стрижки волос для роста.';
-      if (fraction > 0.5) return 'Убывающая Луна — сажайте корнеплоды, собирайте урожай, стригите волосы для укрепления, делайте заготовки.';
-      return 'Полнолуние — пик энергии, но избегайте важных решений и операций.';
+      if (fraction < 0.03 || fraction > 0.97) {
+        return 'Новолуние — время отдыха, планирования, начала новых дел, медитации.';
+      }
+      if (fraction < 0.5) {
+        return 'Растущая Луна — сажайте растения, которые растут вверх (огурцы, помидоры, зелень, цветы), стригите волосы для роста, начинайте проекты.';
+      }
+      if (fraction > 0.5) {
+        return 'Убывающая Луна — сажайте корнеплоды, собирайте урожай, делайте заготовки, стригите волосы для укрепления, занимайтесь очисткой организма.';
+      }
+      return 'Полнолуние — пик энергии, эмоциональная кульминация, но лучше избегать серьёзных решений и операций.';
     }
-    
-    // Автозапуск при загрузке страницы + установка текущей даты
+
+    // Устанавливаем сегодняшнюю дату и сразу показываем результат
     window.onload = function() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('dateInput').value = today;
