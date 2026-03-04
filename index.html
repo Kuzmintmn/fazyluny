@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фазы Луны сегодня — fazyluny.ru</title>
+  <meta name="description" content="Текущая фаза Луны, процент освещённости и рекомендации. Простой лунный календарь онлайн.">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #0d1117; color: #c9d1d9; }
+    h1 { color: #58a6ff; }
+    #result { font-size: 1.4em; margin: 20px; padding: 20px; background: #161b22; border-radius: 10px; }
+    button { padding: 12px 24px; font-size: 1.1em; background: #238636; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #2ea043; }
+    input, select { padding: 10px; margin: 10px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Фазы Луны сегодня</h1>
+  
+  <p>Выберите дату:</p>
+  <input type="date" id="dateInput" value="2026-03-04">
+  
+  <p>Город (для точного времени — пока просто дата):</p>
+  <select id="city">
+    <option value="Москва">Москва</option>
+    <option value="Санкт-Петербург">Санкт-Петербург</option>
+    <option value="Новосибирск">Новосибирск</option>
+    <option value="Екатеринбург">Екатеринбург</option>
+    <!-- Добавь ещё городов позже -->
+  </select>
+  
+  <br>
+  <button onclick="showMoonPhase()">Показать фазу Луны</button>
+  
+  <div id="result"></div>
+
+  <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
+  <script>
+    function showMoonPhase() {
+      const dateStr = document.getElementById('dateInput').value;
+      const date = dateStr ? new Date(dateStr) : new Date();
+      
+      const moon = SunCalc.getMoonIllumination(date);
+      const phase = SunCalc.getMoonTimes(date, 55.7558, 37.6173); // Москва по умолчанию, потом добавим города
+      
+      let phaseName = '';
+      if (moon.fraction < 0.03) phaseName = 'Новолуние 🌑';
+      else if (moon.fraction < 0.47) phaseName = 'Растущая луна 🌒🌓';
+      else if (moon.fraction < 0.53) phaseName = 'Полнолуние 🌕';
+      else phaseName = 'Убывающая луна 🌔🌗';
+      
+      const percent = Math.round(moon.fraction * 100);
+      
+      document.getElementById('result').innerHTML = `
+        <strong>Дата:</strong> ${date.toLocaleDateString('ru-RU')}<br>
+        <strong>Фаза:</strong> ${phaseName}<br>
+        <strong>Освещённость:</strong> ${percent}%<br>
+        <p style="font-size: 4em; margin: 20px;">${getMoonEmoji(percent)}</p>
+        <p>Рекомендация: ${getRecommendation(moon.fraction)}</p>
+      `;
+    }
+    
+    function getMoonEmoji(percent) {
+      if (percent < 3) return '🌑';
+      if (percent < 25) return '🌒';
+      if (percent < 47) return '🌓';
+      if (percent < 53) return '🌔';
+      if (percent < 75) return '🌕';
+      if (percent < 97) return '🌖';
+      return '🌗';
+    }
+    
+    function getRecommendation(fraction) {
+      if (fraction < 0.03 || fraction > 0.97) return 'Новолуние — время отдыха и планирования.';
+      if (fraction < 0.5) return 'Растущая Луна — сажайте всё, что растёт вверх (помидоры, огурцы, цветы).';
+      if (fraction > 0.5) return 'Убывающая Луна — сажайте корнеплоды, собирайте урожай, стригите волосы.';
+      return 'Полнолуние — пик энергии, но будьте осторожны.';
+    }
+    
+    // Показываем сразу при загрузке
+    window.onload = showMoonPhase;
+  </script>
+</body>
+</html>
