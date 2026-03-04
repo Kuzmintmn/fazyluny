@@ -6,93 +6,86 @@
   <title>Фазы Луны сегодня — fazyluny.ru</title>
   <meta name="description" content="Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн.">
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      text-align: center;
-      padding: 20px;
-      background: #0d1117;
-      color: #c9d1d9;
-      margin: 0;
-    }
-    h1 {
-      color: #58a6ff;
-      margin-bottom: 10px;
-    }
-    #result {
-      font-size: 1.3em;
-      margin: 25px auto;
-      padding: 25px;
-      background: #161b22;
-      border-radius: 12px;
-      max-width: 500px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    button {
-      padding: 12px 28px;
-      font-size: 1.1em;
-      background: #238636;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin: 15px 0;
-    }
-    button:hover {
-      background: #2ea043;
-    }
-    input, select {
-      padding: 10px;
-      margin: 8px;
-      font-size: 1em;
-      width: 240px;
-      border-radius: 6px;
-      border: 1px solid #30363d;
-      background: #0d1117;
-      color: #c9d1d9;
-    }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background: #0d1117;
+    color: #c9d1d9;
+    margin: 0;
+  }
+  h1 {
+    color: #58a6ff;
+    margin-bottom: 10px;
+  }
+  #result {
+    font-size: 1.3em;
+    margin: 25px auto;
+    padding: 25px;
+    background: #161b22;
+    border-radius: 12px;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  button {
+    padding: 12px 28px;
+    font-size: 1.1em;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 15px 0;
+  }
+  button:hover {
+    background: #2ea043;
+  }
+  input, select {
+    padding: 10px;
+    margin: 8px;
+    font-size: 1em;
+    width: 240px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
+    background: #0d1117;
+    color: #c9d1d9;
+  }
 
-    /* Фикс стрелочки календаря */
-    input[type="date"] {
-      color: #c9d1d9;
-      background: #0d1117;
-    }
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-      opacity: 0.8;
-      cursor: pointer;
-    }
-    input[type="date"]::-webkit-inner-spin-button,
-    input[type="date"]::-webkit-clear-button {
-      filter: invert(1);
-    }
-    input[type="date"] {
-      appearance: none;
-    }
+  /* Фикс для input[type="date"] — стрелочка календаря */
+  input[type="date"] {
+    color: #c9d1d9;
+    background: #0d1117;
+  }
 
-    .emoji {
-      font-size: 6em;
-      margin: 15px 0;
-      display: inline-block;
-      animation: pulse 4s infinite ease-in-out;
-      transform-origin: center;
-    }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);           /* делает стрелочку белой/светлой */
+    opacity: 0.8;
+    cursor: pointer;
+  }
 
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.06);
-      }
-    }
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-clear-button {
+    filter: invert(1);
+  }
 
-    .label {
-      font-size: 1.1em;
-      margin: 10px 0 5px;
-    }
-  </style>
-</head>
-<body>
+  /* Для Firefox — немного другой синтаксис */
+  input[type="date"]::-moz-focus-inner {
+    border: 0;
+  }
+
+  input[type="date"] {
+    appearance: none;            /* убираем дефолтный вид в некоторых браузерах */
+  }
+
+  .emoji {
+    font-size: 6em;
+    margin: 15px 0;
+  }
+  .label {
+    font-size: 1.1em;
+    margin: 10px 0 5px;
+  }
+</style>
   <h1>Фазы Луны сегодня</h1>
 
   <div class="label">Выберите дату:</div>
@@ -111,6 +104,7 @@
     <option value="Омск">Омск</option>
     <option value="Ростов-на-Дону">Ростов-на-Дону</option>
     <option value="Уфа">Уфа</option>
+    <!-- Добавляй новые города сюда по желанию -->
   </select>
 
   <br>
@@ -120,7 +114,7 @@
 
   <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
   <script>
-    // Координаты городов (скрыты)
+    // Координаты городов (lat, lon) — скрыты от пользователя
     const cities = {
       "Москва":          { lat: 55.7558, lon: 37.6173 },
       "Санкт-Петербург": { lat: 59.9343, lon: 30.3351 },
@@ -140,7 +134,7 @@
       const date = dateStr ? new Date(dateStr) : new Date();
 
       const selectedCity = document.getElementById('city').value;
-      const coords = cities[selectedCity] || cities["Москва"];
+      const coords = cities[selectedCity] || cities["Москва"]; // fallback
 
       const moonIllum = SunCalc.getMoonIllumination(date);
       const moonTimes = SunCalc.getMoonTimes(date, coords.lat, coords.lon);
@@ -197,7 +191,7 @@
       return 'Полнолуние — пик энергии, эмоциональная кульминация, но лучше избегать серьёзных решений и операций.';
     }
 
-    // Устанавливаем сегодняшнюю дату и показываем сразу
+    // Устанавливаем сегодняшнюю дату и сразу показываем результат
     window.onload = function() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('dateInput').value = today;
