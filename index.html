@@ -10,6 +10,7 @@
   <title>Фазы Луны сегодня | Лунный календарь онлайн</title>
   <meta name="description" content="🌖 Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн в твоем городе.">
 
+  <!-- Open Graph + Twitter -->
   <meta property="og:title" content="Фазы Луны сегодня | Лунный календарь онлайн">
   <meta property="og:description" content="Текущая фаза Луны, процент освещённости, время восхода и захода по городам России. Простой и точный лунный календарь.">
   <meta property="og:type" content="website">
@@ -23,6 +24,7 @@
   <meta name="twitter:description" content="Текущая фаза Луны, процент освещённости, время восхода и захода по городам.">
   <meta name="twitter:image" content="https://fazyluny.ru/images/moon_01.svg">
 
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,12 +42,28 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px 10px;
-      background: #0d1117;
+      background: radial-gradient(circle at 20% 30%, #0d1117 0%, #0a0e1a 40%, #000814 100%);
+      background-attachment: fixed;
       color: #c9d1d9;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+      background-size: 60px 60px, 40px 40px, 80px 80px;
+      background-position: 0 0, 30px 30px, 60px 60px;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: -1;
     }
     main {
       width: 100%;
@@ -56,8 +74,10 @@
       gap: 20px;
     }
     h1 {
-  color: #e0e0ff;          /* основной цвет — светлый лунный */
-  text-shadow: 0 0 10px rgba(224, 224, 255, 0.5);  /* мягкое свечение как у Луны */
+      color: #e0e0ff;
+      text-shadow: 0 0 10px rgba(224, 224, 255, 0.5);
+      margin: 10px 0 20px;
+      font-size: 2.2em;
     }
     .form-group {
       width: 100%;
@@ -137,14 +157,13 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       overflow: hidden;
       word-wrap: break-word;
-      text-align: center;           /* весь текст и картинка по центру */
+      text-align: center;
     }
     .emoji {
       font-size: 6em;
-      margin: 20px auto;            /* центрируем эмодзи */
-      display: block;               /* делает его блочным элементом */
+      margin: 20px auto;
+      display: block;
     }
-    
     input[type="date"] {
       color-scheme: dark;
       background: #161b22;
