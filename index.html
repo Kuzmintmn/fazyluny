@@ -27,12 +27,25 @@
   {
     "@context": "https://schema.org",
     "@graph": [
-      {"@type":"WebSite","@id":"https://fazyluny.ru/#website","url":"https://fazyluny.ru/","name":"fazyluny.ru","description":"Онлайн-калькулятор фаз Луны с временем восхода/захода и рекомендациями по городам России","potentialAction":{"@type":"SearchAction","target":"https://fazyluny.ru/?q={search_term_string}","query-input":"required name=search_term_string"}},
-      {"@type":"WebPage","@id":"https://fazyluny.ru/#webpage","url":"https://fazyluny.ru/","name":"Фазы Луны сегодня | Лунный календарь онлайн","description":"Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Простой и точный лунный календарь.","isPartOf":{"@id":"https://fazyluny.ru/#website"},"datePublished":"2026-03-05","dateModified":"2026-03-05","inLanguage":"ru-RU","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://fazyluny.ru/"}]}},
-      {"@type":"SoftwareApplication","@id":"https://fazyluny.ru/#software","name":"fazyluny.ru — Лунный календарь онлайн","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"url":"https://fazyluny.ru/","description":"Бесплатный онлайн-калькулятор фаз Луны с рекомендациями для садоводов, рыбаков и всех интересующихся."}
+      {"@type":"WebSite","@id":"https://fazyluny.ru/#website","url":"https://fazyluny.ru/","name":"fazyluny.ru","description":"Онлайн-калькулятор фаз Луны..."},
+      {"@type":"WebPage","@id":"https://fazyluny.ru/#webpage","url":"https://fazyluny.ru/","name":"Фазы Луны сегодня | Лунный календарь онлайн","description":"Текущая фаза Луны...","isPartOf":{"@id":"https://fazyluny.ru/#website"}},
+      {"@type":"SoftwareApplication","@id":"https://fazyluny.ru/#software","name":"fazyluny.ru — Лунный календарь онлайн","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"url":"https://fazyluny.ru/"}
     ]
   }
   </script>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=107161563', 'ym');
+      ym(107161563, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/107161563" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 
   <style>
     * { box-sizing: border-box; }
@@ -148,7 +161,7 @@
     .cookie-notice {
       font-size: 0.9em;
       color: #6e7681;
-      margin-top: 30px;
+      margin: 30px 0 20px;
       text-align: center;
       max-width: 500px;
     }
