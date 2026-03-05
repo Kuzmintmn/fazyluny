@@ -9,8 +9,8 @@
   <link rel="canonical" href="https://fazyluny.ru/">
   <title>Фазы Луны сегодня | Лунный календарь онлайн</title>
   <meta name="description" content="🌖 Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн в твоем городе.">
-  
-  <!-- Open Graph + Twitter Cards -->
+
+  <!-- Open Graph + Twitter Cards + Schema (оставляем как было) -->
   <meta property="og:title" content="Фазы Луны сегодня | Лунный календарь онлайн">
   <meta property="og:description" content="Текущая фаза Луны, процент освещённости, время восхода и захода по городам России. Простой и точный лунный календарь.">
   <meta property="og:type" content="website">
@@ -20,63 +20,18 @@
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="fazyluny.ru">
 
-  <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Фазы Луны сегодня | Лунный календарь онлайн">
   <meta name="twitter:description" content="Текущая фаза Луны, процент освещённости, время восхода и захода по городам.">
   <meta name="twitter:image" content="https://fazyluny.ru/images/moon_01.svg">
 
-  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://fazyluny.ru/#website",
-        "url": "https://fazyluny.ru/",
-        "name": "fazyluny.ru",
-        "description": "Онлайн-калькулятор фаз Луны с временем восхода/захода и рекомендациями по городам России",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://fazyluny.ru/?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://fazyluny.ru/#webpage",
-        "url": "https://fazyluny.ru/",
-        "name": "Фазы Луны сегодня | Лунный календарь онлайн",
-        "description": "Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Простой и точный лунный календарь.",
-        "isPartOf": { "@id": "https://fazyluny.ru/#website" },
-        "datePublished": "2026-03-05",
-        "dateModified": "2026-03-05",
-        "inLanguage": "ru-RU",
-        "breadcrumb": {
-          "@type": "BreadcrumbList",
-          "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://fazyluny.ru/"
-          }]
-        }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://fazyluny.ru/#software",
-        "name": "fazyluny.ru — Лунный календарь онлайн",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Web",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "RUB"
-        },
-        "url": "https://fazyluny.ru/",
-        "description": "Бесплатный онлайн-калькулятор фаз Луны с рекомендациями для садоводов, рыбаков и всех интересующихся."
-      }
+      {"@type":"WebSite","@id":"https://fazyluny.ru/#website","url":"https://fazyluny.ru/","name":"fazyluny.ru","description":"Онлайн-калькулятор фаз Луны с временем восхода/захода и рекомендациями по городам России","potentialAction":{"@type":"SearchAction","target":"https://fazyluny.ru/?q={search_term_string}","query-input":"required name=search_term_string"}},
+      {"@type":"WebPage","@id":"https://fazyluny.ru/#webpage","url":"https://fazyluny.ru/","name":"Фазы Луны сегодня | Лунный календарь онлайн","description":"Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Простой и точный лунный календарь.","isPartOf":{"@id":"https://fazyluny.ru/#website"},"datePublished":"2026-03-05","dateModified":"2026-03-05","inLanguage":"ru-RU","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://fazyluny.ru/"}]}},
+      {"@type":"SoftwareApplication","@id":"https://fazyluny.ru/#software","name":"fazyluny.ru — Лунный календарь онлайн","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"url":"https://fazyluny.ru/","description":"Бесплатный онлайн-калькулятор фаз Луны с рекомендациями для садоводов, рыбаков и всех интересующихся."}
     ]
   }
   </script>
@@ -90,10 +45,7 @@
       color: #c9d1d9;
       margin: 0;
     }
-    h1 {
-      color: #58a6ff;
-      margin-bottom: 10px;
-    }
+    h1 { color: #58a6ff; margin-bottom: 10px; }
     #result {
       font-size: 1.3em;
       margin: 25px auto;
@@ -113,10 +65,8 @@
       cursor: pointer;
       margin: 15px 0;
     }
-    button:hover {
-      background: #2ea043;
-    }
-    input, select {
+    button:hover { background: #2ea043; }
+    input {
       padding: 10px;
       margin: 8px;
       font-size: 1em;
@@ -125,36 +75,52 @@
       border: 1px solid #30363d;
       background: #0d1117;
       color: #c9d1d9;
+      box-sizing: border-box;
     }
-    /* Фикс для input[type="date"] — стрелочка календаря */
+    .city-search-container {
+      position: relative;
+      display: inline-block;
+      width: 240px;
+      margin: 8px;
+    }
+    #citySuggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      z-index: 10;
+      display: none;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    #citySuggestions li {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #30363d;
+    }
+    #citySuggestions li:last-child { border-bottom: none; }
+    #citySuggestions li:hover { background: #238636; }
     input[type="date"] {
       color: #c9d1d9;
       background: #0d1117;
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1); /* делает стрелочку белой/светлой */
+      filter: invert(1);
       opacity: 0.8;
       cursor: pointer;
     }
     input[type="date"]::-webkit-inner-spin-button,
-    input[type="date"]::-webkit-clear-button {
-      filter: invert(1);
-    }
-    /* Для Firefox — немного другой синтаксис */
-    input[type="date"]::-moz-focus-inner {
-      border: 0;
-    }
-    input[type="date"] {
-      appearance: none; /* убираем дефолтный вид в некоторых браузерах */
-    }
-    .emoji {
-      font-size: 6em;
-      margin: 15px 0;
-    }
-    .label {
-      font-size: 1.1em;
-      margin: 10px 0 5px;
-    }
+    input[type="date"]::-webkit-clear-button { filter: invert(1); }
+    input[type="date"]::-moz-focus-inner { border: 0; }
+    input[type="date"] { appearance: none; }
+    .emoji { font-size: 6em; margin: 15px 0; }
+    .label { font-size: 1.1em; margin: 10px 0 5px; }
   </style>
 </head>
 <body>
@@ -164,61 +130,10 @@
   <input type="date" id="dateInput">
 
   <div class="label">Введите город:</div>
-  <input type="text" id="cityInput" list="cityList" placeholder="Начните вводить город...">
-
-  <datalist id="cityList">
-    <option value="Москва">
-    <option value="Санкт-Петербург">
-    <option value="Новосибирск">
-    <option value="Екатеринбург">
-    <option value="Казань">
-    <option value="Нижний Новгород">
-    <option value="Челябинск">
-    <option value="Самара">
-    <option value="Омск">
-    <option value="Ростов-на-Дону">
-    <option value="Уфа">
-    <option value="Красноярск">
-    <option value="Воронеж">
-    <option value="Пермь">
-    <option value="Волгоград">
-    <option value="Краснодар">
-    <option value="Саратов">
-    <option value="Тюмень">
-    <option value="Тольятти">
-    <option value="Ижевск">
-    <option value="Барнаул">
-    <option value="Ульяновск">
-    <option value="Иркутск">
-    <option value="Хабаровск">
-    <option value="Ярославль">
-    <option value="Владивосток">
-    <option value="Махачкала">
-    <option value="Томск">
-    <option value="Оренбург">
-    <option value="Кемерово">
-    <option value="Новокузнецк">
-    <option value="Рязань">
-    <option value="Астрахань">
-    <option value="Пенза">
-    <option value="Липецк">
-    <option value="Тула">
-    <option value="Киров">
-    <option value="Чебоксары">
-    <option value="Калининград">
-    <option value="Брянск">
-    <option value="Курск">
-    <option value="Иваново">
-    <option value="Магнитогорск">
-    <option value="Тверь">
-    <option value="Ставрополь">
-    <option value="Белгород">
-    <option value="Архангельск">
-    <option value="Владимир">
-    <option value="Севастополь">
-    <option value="Чита">
-    <option value="Калуга">
-  </datalist>
+  <div class="city-search-container">
+    <input type="text" id="cityInput" placeholder="Начните вводить город...">
+    <ul id="citySuggestions"></ul>
+  </div>
 
   <br>
   <button onclick="showMoonPhase()">Показать фазу Луны</button>
@@ -227,7 +142,6 @@
 
   <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
   <script>
-    // Расширенный список координат городов
     const cities = {
       "Москва": { lat: 55.7558, lon: 37.6173 },
       "Санкт-Петербург": { lat: 59.9343, lon: 30.3351 },
@@ -282,30 +196,72 @@
       "Калуга": { lat: 54.5070, lon: 36.2523 }
     };
 
+    const cityInput = document.getElementById('cityInput');
+    const suggestions = document.getElementById('citySuggestions');
+
+    // Показываем подсказки при вводе
+    cityInput.addEventListener('input', function() {
+      const query = this.value.trim().toLowerCase();
+      suggestions.innerHTML = '';
+      if (query.length < 2) {
+        suggestions.style.display = 'none';
+        return;
+      }
+
+      const matches = Object.keys(cities).filter(city =>
+        city.toLowerCase().includes(query)
+      ).slice(0, 10); // лимит 10 подсказок
+
+      if (matches.length === 0) {
+        suggestions.style.display = 'none';
+        return;
+      }
+
+      matches.forEach(city => {
+        const li = document.createElement('li');
+        li.textContent = city;
+        li.addEventListener('click', () => {
+          cityInput.value = city;
+          suggestions.style.display = 'none';
+          showMoonPhase(); // сразу пересчитываем
+        });
+        suggestions.appendChild(li);
+      });
+
+      suggestions.style.display = 'block';
+    });
+
+    // Скрываем список при клике вне поля
+    document.addEventListener('click', function(e) {
+      if (!cityInput.contains(e.target) && !suggestions.contains(e.target)) {
+        suggestions.style.display = 'none';
+      }
+    });
+
     function showMoonPhase() {
       const dateStr = document.getElementById('dateInput').value;
       const date = dateStr ? new Date(dateStr) : new Date();
-      
-      let selectedCity = document.getElementById('cityInput').value.trim();
-      const coords = cities[selectedCity] || cities["Москва"]; // fallback если город не найден
-      
+
+      let selectedCity = cityInput.value.trim();
+      const coords = cities[selectedCity] || cities["Москва"];
+
       const moonIllum = SunCalc.getMoonIllumination(date);
       const moonTimes = SunCalc.getMoonTimes(date, coords.lat, coords.lon);
-      
+
       let phaseName = '';
       if (moonIllum.fraction < 0.03) phaseName = 'Новолуние';
       else if (moonIllum.fraction < 0.47) phaseName = 'Растущая Луна';
       else if (moonIllum.fraction < 0.53) phaseName = 'Полнолуние';
       else phaseName = 'Убывающая Луна';
-      
+
       const percent = Math.round(moonIllum.fraction * 100);
-      
+
       let moonRiseSet = '';
       if (moonTimes.rise) moonRiseSet += `<strong>Восход Луны:</strong> ${moonTimes.rise.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
       if (moonTimes.set) moonRiseSet += `<strong>Заход Луны:</strong> ${moonTimes.set.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
       if (moonTimes.alwaysUp) moonRiseSet = '<strong>Луна не заходит (полярный день)</strong><br>';
       if (moonTimes.alwaysDown) moonRiseSet = '<strong>Луна не восходит (полярная ночь)</strong><br>';
-      
+
       document.getElementById('result').innerHTML = `
         <strong>Город:</strong> ${selectedCity || 'Москва (по умолчанию)'}<br>
         <strong>Дата:</strong> ${date.toLocaleDateString('ru-RU')}<br>
