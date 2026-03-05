@@ -1,94 +1,91 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta name="yandex-verification" content="72ceeaeff7c9c2ce" />
-  <meta name="google-site-verification" content="kUa-hueqzr4u79bhLbg20q_7S0yvaOPBw01Vz0U09b4" />
-  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/Kuzmintmn/fazyluny/71389f1de0b828c89ef90e3375ecc09a3efd009d/images/moon_01.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="yandex-verification" content="72ceeaeff7c9c2ce" />
+  <meta name="google-site-verification" content="kUa-hueqzr4u79bhLbg20q_7S0yvaOPBw01Vz0U09b4" />
+  <link rel="icon" type="image/svg+xml" href="/images/moon_01.svg">
   <title>Фазы Луны сегодня | Лунный календарь онлайн</title>
   <meta name="description" content="🌖 Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн в твоем городе.">
+  
   <style>
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    padding: 20px;
-    background: #0d1117;
-    color: #c9d1d9;
-    margin: 0;
-  }
-  h1 {
-    color: #58a6ff;
-    margin-bottom: 10px;
-  }
-  #result {
-    font-size: 1.3em;
-    margin: 25px auto;
-    padding: 25px;
-    background: #161b22;
-    border-radius: 12px;
-    max-width: 500px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  }
-  button {
-    padding: 12px 28px;
-    font-size: 1.1em;
-    background: #238636;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin: 15px 0;
-  }
-  button:hover {
-    background: #2ea043;
-  }
-  input, select {
-    padding: 10px;
-    margin: 8px;
-    font-size: 1em;
-    width: 240px;
-    border-radius: 6px;
-    border: 1px solid #30363d;
-    background: #0d1117;
-    color: #c9d1d9;
-  }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+    }
+    h1 {
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+    #result {
+      font-size: 1.3em;
+      margin: 25px auto;
+      padding: 25px;
+      background: #161b22;
+      border-radius: 12px;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    button {
+      padding: 12px 28px;
+      font-size: 1.1em;
+      background: #238636;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 15px 0;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    input, select {
+      padding: 10px;
+      margin: 8px;
+      font-size: 1em;
+      width: 240px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    /* Фикс для input[type="date"] — стрелочка календаря */
+    input[type="date"] {
+      color: #c9d1d9;
+      background: #0d1117;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      opacity: 0.8;
+      cursor: pointer;
+    }
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-clear-button {
+      filter: invert(1);
+    }
+    input[type="date"]::-moz-focus-inner {
+      border: 0;
+    }
+    input[type="date"] {
+      appearance: none;
+    }
+    .emoji {
+      font-size: 6em;
+      margin: 15px 0;
+    }
+    .label {
+      font-size: 1.1em;
+      margin: 10px 0 5px;
+    }
+  </style>
+</head>
+<body>
 
-  /* Фикс для input[type="date"] — стрелочка календаря */
-  input[type="date"] {
-    color: #c9d1d9;
-    background: #0d1117;
-  }
-
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);           /* делает стрелочку белой/светлой */
-    opacity: 0.8;
-    cursor: pointer;
-  }
-
-  input[type="date"]::-webkit-inner-spin-button,
-  input[type="date"]::-webkit-clear-button {
-    filter: invert(1);
-  }
-
-  /* Для Firefox — немного другой синтаксис */
-  input[type="date"]::-moz-focus-inner {
-    border: 0;
-  }
-
-  input[type="date"] {
-    appearance: none;            /* убираем дефолтный вид в некоторых браузерах */
-  }
-
-  .emoji {
-    font-size: 6em;
-    margin: 15px 0;
-  }
-  .label {
-    font-size: 1.1em;
-    margin: 10px 0 5px;
-  }
-</style>
   <h1>Фазы Луны сегодня</h1>
 
   <div class="label">Выберите дату:</div>
@@ -135,21 +132,16 @@
     function showMoonPhase() {
       const dateStr = document.getElementById('dateInput').value;
       const date = dateStr ? new Date(dateStr) : new Date();
-
       const selectedCity = document.getElementById('city').value;
       const coords = cities[selectedCity] || cities["Москва"]; // fallback
-
       const moonIllum = SunCalc.getMoonIllumination(date);
       const moonTimes = SunCalc.getMoonTimes(date, coords.lat, coords.lon);
-
       let phaseName = '';
       if (moonIllum.fraction < 0.03) phaseName = 'Новолуние';
       else if (moonIllum.fraction < 0.47) phaseName = 'Растущая Луна';
       else if (moonIllum.fraction < 0.53) phaseName = 'Полнолуние';
       else phaseName = 'Убывающая Луна';
-
       const percent = Math.round(moonIllum.fraction * 100);
-
       let moonRiseSet = '';
       if (moonTimes.rise) {
         moonRiseSet += `<strong>Восход Луны:</strong> ${moonTimes.rise.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'})}<br>`;
@@ -159,7 +151,6 @@
       }
       if (moonTimes.alwaysUp) moonRiseSet = '<strong>Луна не заходит (полярный день)</strong><br>';
       if (moonTimes.alwaysDown) moonRiseSet = '<strong>Луна не восходит (полярная ночь)</strong><br>';
-
       document.getElementById('result').innerHTML = `
         <strong>Город:</strong> ${selectedCity}<br>
         <strong>Дата:</strong> ${date.toLocaleDateString('ru-RU')}<br>
@@ -172,12 +163,12 @@
     }
 
     function getMoonEmoji(percent) {
-      if (percent <= 1)   return '🌑';
-      if (percent <= 25)  return '🌒';
-      if (percent <= 49)  return '🌓';
-      if (percent <= 51)  return '🌔';
-      if (percent <= 75)  return '🌕';
-      if (percent <= 99)  return '🌖';
+      if (percent <= 1) return '🌑';
+      if (percent <= 25) return '🌒';
+      if (percent <= 49) return '🌓';
+      if (percent <= 51) return '🌔';
+      if (percent <= 75) return '🌕';
+      if (percent <= 99) return '🌖';
       return '🌗';
     }
 
@@ -201,5 +192,6 @@
       showMoonPhase();
     };
   </script>
+
 </body>
 </html>
