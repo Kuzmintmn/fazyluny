@@ -145,6 +145,17 @@
       margin: 20px auto;
       display: block;
     }
+    .cookie-notice {
+      font-size: 0.9em;
+      color: #6e7681;
+      margin-top: 30px;
+      text-align: center;
+      max-width: 500px;
+    }
+    .cookie-notice a {
+      color: #58a6ff;
+      text-decoration: underline;
+    }
     input[type="date"] {
       color-scheme: dark;
       background: #161b22;
@@ -179,6 +190,11 @@
     <button onclick="showMoonPhase()">Показать фазу Луны</button>
 
     <div id="result"></div>
+
+    <p class="cookie-notice">
+      Сайт использует cookie и Яндекс.Метрику для анализа посещаемости.<br>
+      Продолжая пользоваться сайтом, вы соглашаетесь с <a href="/politika-konfidencialnosti.html">Политикой конфиденциальности</a>.
+    </p>
   </main>
 
   <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
