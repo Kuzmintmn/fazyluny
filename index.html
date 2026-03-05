@@ -10,7 +10,7 @@
   <title>Фазы Луны сегодня | Лунный календарь онлайн</title>
   <meta name="description" content="🌖 Текущая фаза Луны, процент освещённости, время восхода и захода Луны по городам России. Лунный календарь онлайн в твоем городе.">
 
-  <!-- Open Graph + Twitter Cards + Schema (оставляем как было) -->
+  <!-- Open Graph + Twitter Cards + Schema -->
   <meta property="og:title" content="Фазы Луны сегодня | Лунный календарь онлайн">
   <meta property="og:description" content="Текущая фаза Луны, процент освещённости, время восхода и захода по городам России. Простой и точный лунный календарь.">
   <meta property="og:type" content="website">
@@ -83,11 +83,16 @@
       width: 240px;
       margin: 8px;
     }
+    #cityInput {
+      width: 100%;
+      box-sizing: border-box;
+    }
     #citySuggestions {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
+      width: 100%;
       max-height: 200px;
       overflow-y: auto;
       background: #161b22;
@@ -95,12 +100,13 @@
       border-radius: 6px;
       z-index: 10;
       display: none;
-      margin: 0;
+      margin: 4px 0 0 0;
       padding: 0;
       list-style: none;
+      box-sizing: border-box;
     }
     #citySuggestions li {
-      padding: 10px;
+      padding: 10px 12px;
       cursor: pointer;
       border-bottom: 1px solid #30363d;
     }
@@ -110,11 +116,7 @@
       color: #c9d1d9;
       background: #0d1117;
     }
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-      opacity: 0.8;
-      cursor: pointer;
-    }
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.8; cursor: pointer; }
     input[type="date"]::-webkit-inner-spin-button,
     input[type="date"]::-webkit-clear-button { filter: invert(1); }
     input[type="date"]::-moz-focus-inner { border: 0; }
@@ -199,7 +201,6 @@
     const cityInput = document.getElementById('cityInput');
     const suggestions = document.getElementById('citySuggestions');
 
-    // Показываем подсказки при вводе
     cityInput.addEventListener('input', function() {
       const query = this.value.trim().toLowerCase();
       suggestions.innerHTML = '';
@@ -210,7 +211,7 @@
 
       const matches = Object.keys(cities).filter(city =>
         city.toLowerCase().includes(query)
-      ).slice(0, 10); // лимит 10 подсказок
+      ).slice(0, 10);
 
       if (matches.length === 0) {
         suggestions.style.display = 'none';
@@ -223,7 +224,7 @@
         li.addEventListener('click', () => {
           cityInput.value = city;
           suggestions.style.display = 'none';
-          showMoonPhase(); // сразу пересчитываем
+          showMoonPhase();
         });
         suggestions.appendChild(li);
       });
@@ -231,7 +232,6 @@
       suggestions.style.display = 'block';
     });
 
-    // Скрываем список при клике вне поля
     document.addEventListener('click', function(e) {
       if (!cityInput.contains(e.target) && !suggestions.contains(e.target)) {
         suggestions.style.display = 'none';
