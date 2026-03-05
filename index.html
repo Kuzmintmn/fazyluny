@@ -102,6 +102,7 @@
       width: 100%;
       max-width: 320px;
     }
+    #cityInput { width: 100%; }
     #citySuggestions {
       position: absolute;
       top: 100%;
@@ -137,8 +138,14 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       overflow: hidden;
       word-wrap: break-word;
+      text-align: center;           /* весь текст и картинка по центру */
     }
-    .emoji { font-size: 6em; margin: 20px 0; }
+    .emoji {
+      font-size: 6em;
+      margin: 20px auto;            /* центрируем эмодзи */
+      display: block;               /* делает его блочным элементом */
+    }
+    
     input[type="date"] {
       color-scheme: dark;
       background: #161b22;
