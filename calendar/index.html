@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лунный календарь на март 2026 | fazyluny.ru</title>
+  <meta name="description" content="Лунный календарь на март 2026: фазы Луны, % освещённости, время восхода и захода в Москве.">
+  <link rel="icon" type="image/svg+xml" href="/images/moon_01.svg">
+  <link rel="canonical" href="https://fazyluny.ru/calendar/">
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px 10px;
+      background: #0d1117;
+      color: #c9d1d9;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      color: #e0e0ff;
+      margin: 20px 0 30px;
+    }
+    table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      border-collapse: collapse;
+      background: #161b22;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    th, td {
+      padding: 12px 10px;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+    th {
+      background: #0d1117;
+      color: #58a6ff;
+      font-weight: bold;
+    }
+    tr:hover {
+      background: #1f2937;
+    }
+    .emoji {
+      font-size: 2em;
+    }
+    .phase-new { color: #e0e0ff; }
+    .phase-full { color: #ffd700; font-weight: bold; }
+    .phase-waxing { color: #a0d0ff; }
+    .phase-waning { color: #80b0ff; }
+    .note {
+      text-align: center;
+      color: #8b949e;
+      font-size: 0.95em;
+      margin: 20px 0;
+    }
+    .back {
+      text-align: center;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) {
+      table { font-size: 0.9em; }
+      th, td { padding: 8px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Лунный календарь на март 2026</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Дата</th>
+        <th>День</th>
+        <th>Фаза</th>
+        <th>Освещённость</th>
+        <th>Восход Луны</th>
+        <th>Заход Луны</th>
+      </tr>
+    </thead>
+    <tbody id="calendarBody"></tbody>
+  </table>
+
+  <p class="note">Время указано для Москвы (55.7558, 37.6173). Для других городов используйте <a href="/" style="color: #58a6ff;">главный калькулятор</a>.</p>
+  <p class="back"><a href="/" style="color: #58a6ff;">Вернуться на главную</a></p>
+
+  <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
+  <script>
+    const coords = { lat: 55.7558, lon: 37.6173 }; // Москва
+    const calendarBody = document.getElementById('calendarBody');
+
+    const startDate = new Date(2026, 2, 1); // март 2026 (месяц 2 = март)
+    const daysInMonth = new Date(2026, 3, 0).getDate(); // 31 день
+
+    for (let i = 0; i < daysInMonth; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+
+      const moonIllum = SunCalc.getMoonIllumination(date);
+      const moonTimes = SunCalc.getMoonTimes(date, coords.lat, coords.lon);
+
+      const percent = Math.round(moonIllum.fraction * 100);
+
+      let phaseName = '';
+      let phaseClass = '';
+      if (moonIllum.fraction < 0.03) {
+        phaseName = 'Новолуние 🌑';
+        phaseClass = 'phase-new';
+      } else if (moonIllum.fraction < 0.47) {
+        phaseName = 'Растущая 🌓';
+        phaseClass = 'phase-waxing';
+      } else if (moonIllum.fraction < 0.53) {
+        phaseName = 'Полнолуние 🌕';
+        phaseClass = 'phase-full';
+      } else {
+        phaseName = 'Убывающая 🌖';
+        phaseClass = 'phase-waning';
+      }
+
+      let rise = moonTimes.rise ? moonTimes.rise.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'}) : '—';
+      let set = moonTimes.set ? moonTimes.set.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'}) : '—';
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${date.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit'})}</td>
+        <td>${date.toLocaleDateString('ru-RU', {weekday: 'short'})}</td>
+        <td class="${phaseClass}"><span class="emoji">${getMoonEmoji(percent)}</span> ${phaseName}</td>
+        <td>${percent}%</td>
+        <td>${rise}</td>
+        <td>${set}</td>
+      `;
+      calendarBody.appendChild(row);
+    }
+
+    function getMoonEmoji(percent) {
+      if (percent <= 1) return '🌑';
+      if (percent <= 25) return '🌒';
+      if (percent <= 49) return '🌓';
+      if (percent <= 51) return '🌔';
+      if (percent <= 75) return '🌕';
+      if (percent <= 99) return '🌖';
+      return '🌗';
+    }
+  </script>
+</body>
+</html>
